@@ -37,7 +37,7 @@ A modern, full-stack web application for railway ticket booking with secure user
 ### Frontend
 - **HTML5** - Markup language
 - **CSS3** - Modern styling with CSS Grid/Flexbox
-- **Vanilla JavaScript** - Client-side functionality
+- **JavaScript** - Client-side functionality
 - **Font Awesome** - Icon library
 
 ### Database Collections
