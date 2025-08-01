@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Railway Reservation - Dashboard</title>
+    <link rel="stylesheet" href="styledash.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <h1><i class="fas fa-train"></i> Railway Reservation System</h1>
+            <nav>
+                <ul>
+                    <li><a href="#" id="profileBtn"><i class="fas fa-user"></i> Profile</a></li>
+                    <li><a href="#" id="bookTicketsBtn"><i class="fas fa-ticket-alt"></i> Book Tickets</a></li>
+                    <li><a href="#" id="pastTicketsBtn"><i class="fas fa-history"></i> Past Tickets</a></li>
+                    <li><a href="#" id="paymentHistoryBtn"><i class="fas fa-credit-card"></i> Payment History</a></li>
+                    <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="welcome">
+        <div class="welcome-content">
+            <h2>Welcome back, <span id="username">User</span>! 👋</h2>
+            <p>Plan your journey with ease and comfort</p>
+        </div>
+    </section>
+
+    <main>
+        <!-- Profile Section -->
+        <section id="profileSection" class="hidden card">
+            <div class="section-header">
+                <h2><i class="fas fa-user-circle"></i> User Profile</h2>
+            </div>
+            <div class="profile-grid">
+                <div class="profile-item">
+                    <label>User ID:</label>
+                    <span id="userid" class="profile-value">-</span>
+                </div>
+                <div class="profile-item">
+                    <label>Name:</label>
+                    <span id="username1" class="profile-value">-</span>
+                </div>
+                <div class="profile-item">
+                    <label>Mobile:</label>
+                    <span id="Mobile_number" class="profile-value">-</span>
+                </div>
+                <div class="profile-item">
+                    <label>Email:</label>
+                    <span id="email" class="profile-value">-</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Booking Section -->
+        <section id="bookingSection" class="hidden card">
+            <div class="section-header">
+                <h2><i class="fas fa-ticket-alt"></i> Book Your Ticket</h2>
+            </div>
+            <form id="bookingForm" class="booking-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label><i class="fas fa-user"></i> Name:</label>
+                        <input type="text" id="name" required placeholder="Enter your full name">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-phone"></i> Mobile Number:</label>
+                        <input type="text" id="mobile_number" required placeholder="Enter mobile number">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-id-card"></i> Aadhar:</label>
+                        <input type="text" id="aadhar" placeholder="Enter Aadhar number">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-birthday-cake"></i> Age:</label>
+                        <input type="number" id="age" placeholder="Enter age" min="1" max="120">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-venus-mars"></i> Gender:</label>
+                        <select id="gender">
+                            <option value="">Select Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-train"></i> Train:</label>
+                        <select id="train_no" required>
+                            <option value="">Select Train</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="trainDetails" class="train-details">
+                    <h3>Train Details</h3>
+                    <div class="train-info-grid">
+                        <div class="info-item">
+                            <strong>Train Name:</strong> <span id="name1">--</span>
+                        </div>
+                        <div class="info-item">
+                            <strong>From:</strong> <span id="source">--</span>
+                        </div>
+                        <div class="info-item">
+                            <strong>To:</strong> <span id="destination">--</span>
+                        </div>
+                        <div class="info-item">
+                            <strong>Class:</strong> <span id="class">--</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn-primary">
+                    <i class="fas fa-check-circle"></i> Book Ticket
+                </button>
+            </form>
+        </section>
+
+        <!-- Past Tickets Section -->
+        <section id="pastTicketsSection" class="hidden card">
+            <div class="section-header">
+                <h2><i class="fas fa-history"></i> Past Tickets</h2>
+            </div>
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Ticket ID</th>
+                            <th>Transaction ID</th>
+                            <th>Train Number</th>
+                            <th>Train Name</th>
+                            <th>Class</th>
+                            <th>From</th>
+                            <th>To</th>
+                            <th>Status</th>
+                            <th>Date & Time</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pastTicketsTable">
+                        <tr>
+                            <td colspan="9" class="loading">Loading tickets...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Payment History Section -->
+        <section id="paymentHistorySection" class="hidden card">
+            <div class="section-header">
+                <h2><i class="fas fa-credit-card"></i> Payment History</h2>
+            </div>
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>User ID</th>
+                            <th>Transaction ID</th>
+                            <th>Payment Type</th>
+                            <th>Amount (₹)</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="paymentHistoryTable">
+                        <tr>
+                            <td colspan="5" class="loading">Loading payment history...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script src="scriptdash.js"></script>
+</body>
+</html>

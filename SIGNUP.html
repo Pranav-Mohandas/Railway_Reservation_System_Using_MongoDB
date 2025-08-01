@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Railway Reservation System</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Background animation -->
+    <div class="background-animation">
+        <div class="train-track"></div>
+    </div>
+
+    <div class="auth-container">
+        <!-- Left side - Branding -->
+        <div class="auth-branding">
+            <div class="branding-content">
+                <div class="logo">
+                    <i class="fas fa-train"></i>
+                    <h1>Railway Reservation</h1>
+                </div>
+                <p class="tagline">Join thousands of happy travelers</p>
+                <div class="features">
+                    <div class="feature">
+                        <i class="fas fa-ticket-alt"></i>
+                        <span>Easy Booking</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-history"></i>
+                        <span>Track History</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-headset"></i>
+                        <span>24/7 Support</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right side - Signup Form -->
+        <div class="auth-form-container">
+            <div class="auth-form">
+                <div class="form-header">
+                    <h2>Create Account</h2>
+                    <p>Join us for a seamless travel experience</p>
+                </div>
+
+                <form id="signupForm" class="signup-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="userid">
+                                <i class="fas fa-id-badge"></i>
+                                User ID
+                            </label>
+                            <input type="text" id="userid" required placeholder="Choose a unique ID">
+                            <span class="focus-border"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="username">
+                                <i class="fas fa-user"></i>
+                                Full Name
+                            </label>
+                            <input type="text" id="username" required placeholder="Enter your full name">
+                            <span class="focus-border"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">
+                                <i class="fas fa-envelope"></i>
+                                Email Address
+                            </label>
+                            <input type="email" id="email" required placeholder="Enter your email">
+                            <span class="focus-border"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Mobile_number">
+                                <i class="fas fa-phone"></i>
+                                Phone Number
+                            </label>
+                            <input type="text" id="Mobile_number" required placeholder="Enter phone number">
+                            <span class="focus-border"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">
+                            <i class="fas fa-lock"></i>
+                            Password
+                        </label>
+                        <div class="password-input">
+                            <input type="password" id="password" required placeholder="Create a secure password">
+                            <button type="button" class="password-toggle" onclick="togglePassword()">
+                                <i class="fas fa-eye" id="passwordIcon"></i>
+                            </button>
+                        </div>
+                        <span class="focus-border"></span>
+                        <div class="password-strength">
+                            <div class="strength-bar">
+                                <div class="strength-fill"></div>
+                            </div>
+                            <span class="strength-text">Password strength</span>
+                        </div>
+                    </div>
+
+                    <div class="form-options">
+                        <label class="checkbox-container">
+                            <input type="checkbox" id="agreeTerms" required>
+                            <span class="checkmark"></span>
+                            I agree to the <a href="#" class="terms-link">Terms & Conditions</a>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn-signup">
+                        <span class="btn-text">Create Account</span>
+                        <i class="fas fa-user-plus btn-icon"></i>
+                    </button>
+                </form>
+
+                <div class="auth-footer">
+                    <p>Already have an account? 
+                        <a href="login.html" class="login-link">Sign in here</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="signup.js"></script>
+    <script>
+        // Password toggle functionality
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const passwordIcon = document.getElementById('passwordIcon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                passwordIcon.classList.remove('fa-eye');
+                passwordIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                passwordIcon.classList.remove('fa-eye-slash');
+                passwordIcon.classList.add('fa-eye');
+            }
+        }
+
+        // Password strength indicator
+        document.getElementById('password').addEventListener('input', function() {
+            const password = this.value;
+            const strengthBar = document.querySelector('.strength-fill');
+            const strengthText = document.querySelector('.strength-text');
+            
+            let strength = 0;
+            let text = 'Weak';
+            let color = '#ef4444';
+            
+            if (password.length >= 8) strength++;
+            if (/[A-Z]/.test(password)) strength++;
+            if (/[a-z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[^A-Za-z0-9]/.test(password)) strength++;
+            
+            if (strength >= 4) {
+                text = 'Strong';
+                color = '#10b981';
+            } else if (strength >= 2) {
+                text = 'Medium';
+                color = '#f59e0b';
+            }
+            
+            strengthBar.style.width = `${(strength / 5) * 100}%`;
+            strengthBar.style.backgroundColor = color;
+            strengthText.textContent = `Password strength: ${text}`;
+        });
+    </script>
+</body>
+</html>
