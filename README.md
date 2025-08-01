@@ -52,24 +52,7 @@ A modern, full-stack web application for railway ticket booking with secure user
 ### Prerequisites
 - Node.js (v18 or higher)
 - MongoDB (local or cloud instance)
-
-## 📁 Project Structure
-
-railway-reservation-system/ 
-├── server.js # Main server file
-├── public/ # Static files
-│ ├── login.html # Login page
-│ ├── signup.html # Registration page
-│ ├── dashboard.html # Main dashboard
-│ ├── style.css # Authentication styles
-│ ├── styledash.css # Dashboard styles
-│ ├── auth-style.css # Modern auth styles
-│ ├── script.js # Login functionality
-│ ├── signup.js # Registration functionality
-│ └── scriptdash.js # Dashboard functionality
-├── package.json # Dependencies
-└── README.md # Project documentation
-
+  
 ## 🔧 API Endpoints
 
 ### Authentication
