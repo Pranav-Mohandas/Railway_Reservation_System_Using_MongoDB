@@ -1,11 +1,6 @@
 # Railway_Reservation_System_Using_MongoDB
 A modern, full-stack web application for railway ticket booking with secure user authentication, payment processing, and comprehensive booking management.
 
-![Railway Reservation System](https://img.shields.io/badge/Status-Complete-brightgreen)
-![Node.js](https://img.shields.io/badge/Node.js-v18+-green)
-![MongoDB](https://img.shields.io/badge/Database-MongoDB-green)
-![HTML5](https://img.shields.io/badge/Frontend-HTML5%2FCSS3%2FJS-blue)
-
 ## 🌟 Features
 
 ### 🔐 Authentication System
@@ -30,7 +25,6 @@ A modern, full-stack web application for railway ticket booking with secure user
 - **Past Tickets** - View all previous bookings
 - **Payment History** - Complete payment transaction records
 - **Profile Overview** - User information display
-- **Responsive Design** - Mobile-friendly interface
 
 ## 🛠️ Tech Stack
 
@@ -58,15 +52,10 @@ A modern, full-stack web application for railway ticket booking with secure user
 ### Prerequisites
 - Node.js (v18 or higher)
 - MongoDB (local or cloud instance)
-- Git
-
-### Clone the Repository
-git clone https://github.com/yourusername/railway-reservation-system.git
-cd railway-reservation-system
 
 ## 📁 Project Structure
 
-railway-reservation-system/
+railway-reservation-system/ 
 ├── server.js # Main server file
 ├── public/ # Static files
 │ ├── login.html # Login page
@@ -137,7 +126,6 @@ railway-reservation-system/
 
 - **Input Validation** - Server-side validation for all inputs
 - **Session Management** - Secure user session handling
-- **Data Sanitization** - Protection against injection attacks
 - **CORS Configuration** - Controlled cross-origin requests
 
 ## 🚧 Future Enhancements
@@ -158,4 +146,4 @@ railway-reservation-system/
 - **Font Awesome** - For the beautiful icons
 - **Google Fonts** - For the modern typography
 
-**Project Link** - https://github.com/yourusername/railway-reservation-system
+**Project Link** -https://github.com/Pranav-Mohandas/Railway_Reservation_System_Using_MongoDB
