@@ -54,19 +54,23 @@ A modern, full-stack web application for railway ticket booking with secure user
 - MongoDB (local or cloud instance)
 
 ### 📁 Project Structure
-Mini_Project/
-server.js
-public/
-login.html 
-signup.html 
-dashboard.html 
-style.css 
-styledash.css 
-auth-style.css 
-script.js 
-signup.js 
-scriptdash.js 
-  
+
+📁 Mini_Project/  
+│  
+├── 📄 server.js  
+│  
+├── 📁 public/  
+│   ├── 📄 login.html  
+│   ├── 📄 signup.html  
+│   ├── 📄 dashboard.html  
+│   ├── 🎨 style.css  
+│   ├── 🎨 styledash.css  
+│   ├── 🎨 auth-style.css  
+│   ├── 📜 script.js  
+│   ├── 📜 signup.js  
+│   └── 📜 scriptdash.js  
+
+ 
 ## 🔧 API Endpoints
 
 ### Authentication
