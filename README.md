@@ -20,6 +20,7 @@ A modern, full-stack web application for railway ticket booking with secure user
 - **Payment History** - Complete transaction history tracking
 - **Random Pricing** - Dynamic pricing system
 - **Payment Confirmation** - Instant booking confirmation
+- **Payment Gateways** - Multiple Payment Methods
 
 ### 📊 User Dashboard
 - **Past Tickets** - View all previous bookings
