@@ -14,12 +14,16 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         const profile = await response.json();
         
-        console.log("👤 Profile data received:", profile); // Debug log
+        console.log("👤 Profile data received:", profile);
 
+        // Update profile section
         document.getElementById("userid").textContent = profile.userid || "N/A";
-        document.getElementById("username1").textContent = profile.username || "N/A";  // ✅ This should work
+        document.getElementById("username1").textContent = profile.username || "N/A";
         document.getElementById("Mobile_number").textContent = profile.Mobile_number || "N/A";
         document.getElementById("email").textContent = profile.email || "N/A";
+
+        // ✅ FIX: Update welcome section username
+        document.getElementById("username").textContent = profile.username || "User";
 
         document.getElementById("profileSection").classList.remove("hidden");
 
@@ -29,8 +33,10 @@ document.addEventListener("DOMContentLoaded", async function () {
         sessionStorage.removeItem("userid");
         window.location.href = "login.html";
     }
-});
 
+    // ✅ FIX: Initialize payment form handlers after DOM is loaded
+    initializePaymentHandlers();
+});
 
 // Logout function
 document.getElementById("logoutBtn").addEventListener("click", function () {
@@ -119,18 +125,6 @@ async function fetchPaymentHistory() {
 
         const payments = await response.json();
         console.log("📊 Raw payment data received:", payments);
-        console.log("📊 First payment object:", payments[0]);
-        
-        // Log each field individually to see what's undefined
-        if (payments.length > 0) {
-            const firstPayment = payments[0];
-            console.log("🔍 Field analysis:");
-            console.log("   userid:", firstPayment.userid);
-            console.log("   transaction_id:", firstPayment.transaction_id);
-            console.log("   amount:", firstPayment.amount);
-            console.log("   confirmation:", firstPayment.confirmation);
-            console.log("   payment_Type:", firstPayment.payment_Type);
-        }
         
         const tableBody = document.getElementById("paymentHistoryTable");
         tableBody.innerHTML = "";
@@ -146,9 +140,9 @@ async function fetchPaymentHistory() {
             row.innerHTML = `
                 <td>${payment.userid || 'N/A'}</td>
                 <td>${payment.transaction_id || 'N/A'}</td>
+                <td>${payment.payment_Type || 'N/A'}</td>
                 <td>₹${payment.amount || '0'}</td>
                 <td>${payment.confirmation || 'N/A'}</td>
-                <td>${payment.payment_Type || 'N/A'}</td>
             `;
             tableBody.appendChild(row);
         });
@@ -157,7 +151,6 @@ async function fetchPaymentHistory() {
         alert("Error loading payment history.");
     }
 }
-
 
 // Populate Train Dropdown
 async function loadTrainList() {
@@ -206,21 +199,18 @@ document.getElementById("bookTicketsBtn").addEventListener("click", async () => 
     }
 
     try {
-        // Check passenger status
         const response = await fetch(`http://localhost:5000/passenger_status/${userId}`);
         if (!response.ok) throw new Error("Failed to check passenger status");
         
         const { exists, passenger } = await response.json();
         
         if (exists) {
-            // Existing passenger - auto-fill all details
             document.getElementById("name").value = passenger.name;
             document.getElementById("mobile_number").value = passenger.mobile_number;
             document.getElementById("aadhar").value = passenger.aadhar;
             document.getElementById("age").value = passenger.age;
             document.getElementById("gender").value = passenger.gender;
         } else {
-            // New passenger - auto-fill from profile
             const profileRes = await fetch(`http://localhost:5000/profile/${userId}`);
             if (!profileRes.ok) throw new Error("Failed to fetch profile");
             
@@ -234,53 +224,159 @@ document.getElementById("bookTicketsBtn").addEventListener("click", async () => 
     }
 });
 
-// Booking Form Submit Handler
-document.getElementById("bookingForm").addEventListener("submit", async function (e) {
-    e.preventDefault();
-
-    const userId = sessionStorage.getItem("userid");
-    console.log("🎫 Frontend - userId from sessionStorage:", userId, typeof userId);
-    
-    const payload = {
-        userid: userId,
-        name: document.getElementById("name").value,
-        mobile_number: document.getElementById("mobile_number").value,
-        aadhar: document.getElementById("aadhar").value,
-        age: parseInt(document.getElementById("age").value),
-        gender: document.getElementById("gender").value,
-        train_no: parseInt(document.getElementById("train_no").value)
-    };
-
-    console.log("📤 Frontend - Sending payload:", JSON.stringify(payload, null, 2));
-
-    try {
-        const response = await fetch("http://localhost:5000/book_ticket", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload)
+// ✅ FIX: Initialize payment handlers function
+function initializePaymentHandlers() {
+    // Payment method selection handler
+    const paymentMethodSelect = document.getElementById("payment_method");
+    if (paymentMethodSelect) {
+        paymentMethodSelect.addEventListener("change", function() {
+            const paymentMethod = this.value;
+            const paymentDetails = document.getElementById("paymentDetails");
+            
+            // Hide all payment options first
+            document.querySelectorAll(".payment-option").forEach(option => {
+                option.style.display = "none";
+            });
+            
+            if (paymentMethod) {
+                paymentDetails.style.display = "block";
+                
+                switch(paymentMethod) {
+                    case "UPI":
+                        document.getElementById("upiDetails").style.display = "block";
+                        break;
+                    case "Debit Card":
+                    case "Credit Card":
+                        document.getElementById("cardDetails").style.display = "block";
+                        break;
+                    case "Net Banking":
+                        document.getElementById("netbankingDetails").style.display = "block";
+                        break;
+                    case "Digital Wallet":
+                        document.getElementById("walletDetails").style.display = "block";
+                        break;
+                }
+            } else {
+                paymentDetails.style.display = "none";
+            }
         });
+    }
 
-        if (!response.ok) {
-            const error = await response.json();
-            throw new Error(error.message || "Booking failed");
+    // Card number formatting
+    const cardNumberInput = document.getElementById("card_number");
+    const expiryInput = document.getElementById("expiry_date");
+    
+    if (cardNumberInput) {
+        cardNumberInput.addEventListener("input", function() {
+            let value = this.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+            let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+            if (formattedValue.length > 19) formattedValue = formattedValue.substring(0, 19);
+            this.value = formattedValue;
+        });
+    }
+
+    if (expiryInput) {
+        expiryInput.addEventListener("input", function() {
+            let value = this.value.replace(/\D/g, '');
+            if (value.length >= 2) {
+                value = value.substring(0, 2) + '/' + value.substring(2, 4);
+            }
+            this.value = value;
+        });
+    }
+
+    // ✅ FIX: Single booking form submit handler
+    const bookingForm = document.getElementById("bookingForm");
+    if (bookingForm) {
+        bookingForm.addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            const userId = sessionStorage.getItem("userid");
+            const paymentMethod = document.getElementById("payment_method").value;
+            
+            if (!paymentMethod) {
+                alert("Please select a payment method");
+                return;
+            }
+
+            console.log("🎫 Frontend - userId from sessionStorage:", userId, typeof userId);
+            
+            const payload = {
+                userid: userId,
+                name: document.getElementById("name").value,
+                mobile_number: document.getElementById("mobile_number").value,
+                aadhar: document.getElementById("aadhar").value,
+                age: parseInt(document.getElementById("age").value),
+                gender: document.getElementById("gender").value,
+                train_no: parseInt(document.getElementById("train_no").value),
+                payment_method: paymentMethod
+            };
+
+            console.log("📤 Frontend - Sending payload:", JSON.stringify(payload, null, 2));
+
+            try {
+                const response = await fetch("http://localhost:5000/book_ticket", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.message || "Booking failed");
+                }
+
+                const data = await response.json();
+                
+                alert(`✅ Ticket booked successfully!\n🎟 Train Name: ${data.train_name}\n💳 Payment Method: ${paymentMethod}\n Ticket ID: ${data.ticket_id}\n💳 Transaction ID: ${data.transaction_id}\n💰 Amount: ₹${data.amount}`);
+                
+                // Reset form after successful booking
+                bookingForm.reset();
+                document.getElementById("paymentDetails").style.display = "none";
+                document.querySelectorAll(".payment-option").forEach(option => {
+                    option.style.display = "none";
+                });
+                
+            } catch (err) {
+                console.error("Booking failed:", err);
+                alert(`Booking failed: ${err.message}`);
+            }
+        });
+    }
+}
+
+// UPI App and Wallet selection handlers
+document.addEventListener("click", function(e) {
+    // UPI App selection
+    if (e.target.classList.contains("app-btn") || e.target.closest(".app-btn")) {
+        const btn = e.target.classList.contains("app-btn") ? e.target : e.target.closest(".app-btn");
+        
+        document.querySelectorAll(".app-btn").forEach(b => b.classList.remove("selected"));
+        btn.classList.add("selected");
+        
+        const app = btn.dataset.app;
+        const upiId = document.getElementById("upi_id");
+        
+        if (upiId) {
+            switch(app) {
+                case "googlepay":
+                    upiId.placeholder = "yourname@oksbi, yourname@okaxis";
+                    break;
+                case "phonepe":
+                    upiId.placeholder = "yourname@ybl, yourname@ibl";
+                    break;
+                case "paytm":
+                    upiId.placeholder = "yourname@paytm";
+                    break;
+            }
         }
-
-        const data = await response.json();
+    }
+    
+    // Wallet selection
+    if (e.target.classList.contains("wallet-btn") || e.target.closest(".wallet-btn")) {
+        const btn = e.target.classList.contains("wallet-btn") ? e.target : e.target.closest(".wallet-btn");
         
-        alert(`✅ Ticket booked successfully!\n🎟 Train Name: ${data.train_name}\n Ticket ID: ${data.ticket_id}\n💳 Transaction ID: ${data.transaction_id}\n💰 Amount: ₹${data.amount}`);
-        
-    } catch (err) {
-        console.error("Booking failed:", err);
-        alert(`Booking failed: ${err.message}`);
+        document.querySelectorAll(".wallet-btn").forEach(b => b.classList.remove("selected"));
+        btn.classList.add("selected");
     }
 });
-    
-        // // Reset form
-        // document.getElementById("bookingForm").reset();
-        // document.getElementById("name1").textContent = "--";
-        // document.getElementById("source").textContent = "--";
-        // document.getElementById("destination").textContent = "--";
-        // document.getElementById("reservation_type").textContent = "--";
-        
-   
-  
