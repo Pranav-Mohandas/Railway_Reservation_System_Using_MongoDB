@@ -55,22 +55,29 @@ A modern, full-stack web application for railway ticket booking with secure user
 
 ### 📁 Project Structure
 
-📁 Mini_Project/  
-│  
-├── 📄 server.js  
-│  
-├── 📁 public/  
-│   ├── 📄 login.html  
-│   ├── 📄 signup.html  
-│   ├── 📄 dashboard.html  
-│   ├── 🎨 style.css  
-│   ├── 🎨 styledash.css  
-│   ├── 🎨 auth-style.css  
-│   ├── 📜 script.js  
-│   ├── 📜 signup.js  
-│   └── 📜 scriptdash.js  
+```text
+📁 Mini_Project/
+│
+├── 📄 server.js                 # Main backend server (Node.js + Express)
+│
+├── 📁 public/                   # Frontend files
+│   ├── 📄 login.html             # Login page
+│   ├── 📄 signup.html            # Signup page
+│   ├── 📄 dashboard.html         # User dashboard
+│   ├── 🎨 style.css              # Styles for login/signup pages
+│   ├── 🎨 styledash.css          # Styles for dashboard
+│   ├── 🎨 auth-style.css         # Additional authentication styles
+│   ├── 📜 script.js              # Login functionality
+│   ├── 📜 signup.js              # Signup functionality
+│   └── 📜 scriptdash.js          # Dashboard functionality
 
- 
+```
+### Dependencies 
+```bash
+npm init -y
+npm install express cors mongodb
+```
+
 ## 🔧 API Endpoints
 
 ### Authentication
@@ -109,18 +116,23 @@ A modern, full-stack web application for railway ticket booking with secure user
 ## 📱 Screenshots
 
 ### Login Page
-<img width="1879" height="833" alt="image" src="https://github.com/user-attachments/assets/4d2f00cb-c185-41ac-ad23-334ae6eca679" />
+<img width="1626" height="843" alt="Screenshot 2025-08-02 103819" src="https://github.com/user-attachments/assets/a9c2c1dc-8436-41d2-9b99-702a316959f7" />
+
 
 ### Dashboard
-<img width="1859" height="845" alt="image" src="https://github.com/user-attachments/assets/7c062d06-f20b-4383-9130-fb69d359d51f" />
+<img width="1616" height="857" alt="Screenshot 2025-08-02 104044" src="https://github.com/user-attachments/assets/2c1a8c78-415e-4d80-872b-106dce0e988c" />
+
 
 
 ### Booking Form
-<img width="1879" height="862" alt="image" src="https://github.com/user-attachments/assets/a3ea3188-d1a5-4453-9012-eaf7cce96970" />
+<img width="1485" height="856" alt="Screenshot 2025-08-02 104140" src="https://github.com/user-attachments/assets/1df6c813-d300-45cf-b231-0aa55e3bfc82" />
+<img width="1268" height="836" alt="Screenshot 2025-08-02 104230" src="https://github.com/user-attachments/assets/88036574-f31a-4d01-8ccc-9e20e9086cae" />
 
+### Past Tickets
+<img width="1199" height="778" alt="Screenshot 2025-08-02 104526" src="https://github.com/user-attachments/assets/1a77e94c-44e2-4eb2-a9ae-0c7832554d49" />
 
 ### Payment History
-<img width="1847" height="837" alt="image" src="https://github.com/user-attachments/assets/844a95f4-09bc-4b33-9f2d-a9e65d3dae90" />
+<img width="1182" height="834" alt="Screenshot 2025-08-02 104351" src="https://github.com/user-attachments/assets/a6b4042b-b4e7-484a-8eb7-a878a9f66794" />
 
 
 ## 🔒 Security Features
@@ -135,7 +147,6 @@ A modern, full-stack web application for railway ticket booking with secure user
 - [ ] **SMS Integration** - Ticket details via SMS
 - [ ] **Advanced Search** - Filter trains by time, price, etc.
 - [ ] **Seat Selection** - Visual seat selection interface
-- [ ] **Multiple Payment Gateways** - PayPal, Stripe integration
 - [ ] **Admin Panel** - Train and user management
 - [ ] **Real-time Updates** - Live train status updates
 - [ ] **Mobile App** - React Native mobile application
