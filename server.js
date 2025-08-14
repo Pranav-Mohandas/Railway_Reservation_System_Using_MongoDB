@@ -127,14 +127,10 @@ app.get("/passenger_status/:userid", async (req, res) => {
 
 // Book Ticket
 app.post("/book_ticket", async (req, res) => {
-  const { userid, name, age, gender, mobile_number, aadhar, train_no } = req.body;
+  const { userid, name, age, gender, mobile_number, aadhar, train_no, payment_method } = req.body;
   
-  console.log("🎫 Booking request received:");
-  console.log("   userid:", userid, typeof userid);
-  console.log("   All req.body:", JSON.stringify(req.body, null, 2));
-  
-  if (!userid || !name || !age || !gender || !mobile_number || !aadhar || !train_no) {
-    return res.status(400).json({ message: "Missing required fields" });
+  if (!userid || !name || !age || !gender || !mobile_number || !train_no || !payment_method) {
+    return res.status(400).json({ message: "All required fields including payment method must be provided" });
   }
 
   try {
@@ -155,26 +151,17 @@ app.post("/book_ticket", async (req, res) => {
       });
     }
 
-    // Create payment with detailed logging
+    // Create payment with selected payment method
     const amount = Math.floor(Math.random() * 401) + 100;
-    
-    const paymentData = {
-      payment_Type: "UPI",
+    const payment = await db.collection("payment").insertOne({
+      payment_Type: payment_method, // Use selected payment method instead of hardcoded "UPI"
       amount: amount,
       confirmation: "Confirmed",
       timestamp: new Date(),
-      userid: userid  // Make sure this is included
-    };
-    
-    console.log("💰 About to create payment with data:", JSON.stringify(paymentData, null, 2));
-    
-    const payment = await db.collection("payment").insertOne(paymentData);
-    
-    console.log("💰 Payment created with ID:", payment.insertedId);
-    
-    // Verify the payment was created correctly
-    const verifyPayment = await db.collection("payment").findOne({_id: payment.insertedId});
-    console.log("🔍 Verification - Payment document:", JSON.stringify(verifyPayment, null, 2));
+      userid: userid
+    });
+
+    console.log("💰 Payment created with method:", payment_method);
 
     // Create ticket
     const ticket = await db.collection("tickets").insertOne({
@@ -197,7 +184,8 @@ app.post("/book_ticket", async (req, res) => {
       ticket_id: ticket.insertedId.toString(),
       transaction_id: payment.insertedId.toString(),
       amount,
-      train_name: train.name
+      train_name: train.name,
+      payment_method: payment_method
     });
   } catch (err) {
     console.error("Booking Error:", err);
