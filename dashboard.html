@@ -56,69 +56,185 @@
             </div>
         </section>
 
-        <!-- Booking Section -->
-        <section id="bookingSection" class="hidden card">
-            <div class="section-header">
-                <h2><i class="fas fa-ticket-alt"></i> Book Your Ticket</h2>
+        <!-- Updated Booking Section -->
+<section id="bookingSection" class="hidden card">
+    <div class="section-header">
+        <h2><i class="fas fa-ticket-alt"></i> Book Your Ticket</h2>
+    </div>
+    <form id="bookingForm" class="booking-form">
+        <div class="form-grid">
+            <div class="form-group">
+                <label><i class="fas fa-user"></i> Name:</label>
+                <input type="text" id="name" required placeholder="Enter your full name">
             </div>
-            <form id="bookingForm" class="booking-form">
+            <div class="form-group">
+                <label><i class="fas fa-phone"></i> Mobile Number:</label>
+                <input type="text" id="mobile_number" required placeholder="Enter mobile number">
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-id-card"></i> Aadhar:</label>
+                <input type="text" id="aadhar" placeholder="Enter Aadhar number">
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-birthday-cake"></i> Age:</label>
+                <input type="number" id="age" placeholder="Enter age" min="1" max="120">
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-venus-mars"></i> Gender:</label>
+                <select id="gender">
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-train"></i> Train:</label>
+                <select id="train_no" required>
+                    <option value="">Select Train</option>
+                </select>
+            </div>
+
+            <!-- NEW: Payment Method Selection -->
+            <div class="form-group">
+                <label><i class="fas fa-credit-card"></i> Payment Method:</label>
+                <select id="payment_method" required>
+                    <option value="">Select Payment Method</option>
+                    <option value="UPI">UPI</option>
+                    <option value="Debit Card">Debit Card</option>
+                    <option value="Credit Card">Credit Card</option>
+                    <option value="Net Banking">Net Banking</option>
+                    <option value="Digital Wallet">Digital Wallet</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Train Details (existing) -->
+        <div id="trainDetails" class="train-details">
+            <h3>Train Details</h3>
+            <div class="train-info-grid">
+                <div class="info-item">
+                    <strong>Train Name:</strong> <span id="name1">--</span>
+                </div>
+                <div class="info-item">
+                    <strong>From:</strong> <span id="source">--</span>
+                </div>
+                <div class="info-item">
+                    <strong>To:</strong> <span id="destination">--</span>
+                </div>
+                <div class="info-item">
+                    <strong>Class:</strong> <span id="class">--</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- NEW: Payment Method Details -->
+        <div id="paymentDetails" class="payment-details" style="display: none;">
+            <h3><i class="fas fa-credit-card"></i> Payment Information</h3>
+            
+            <!-- UPI Details -->
+            <div id="upiDetails" class="payment-option" style="display: none;">
+                <div class="form-group">
+                    <label><i class="fab fa-google-pay"></i> UPI ID:</label>
+                    <input type="text" id="upi_id" placeholder="yourname@paytm, yourname@googlepay, etc.">
+                </div>
+                <div class="payment-apps">
+                    <h4>Quick UPI Apps:</h4>
+                    <div class="app-buttons">
+                        <button type="button" class="app-btn" data-app="googlepay">
+                            <i class="fab fa-google-pay"></i> Google Pay
+                        </button>
+                        <button type="button" class="app-btn" data-app="phonepe">
+                            <i class="fas fa-mobile-alt"></i> PhonePe
+                        </button>
+                        <button type="button" class="app-btn" data-app="paytm">
+                            <i class="fas fa-wallet"></i> Paytm
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card Details (for both Debit & Credit) -->
+            <div id="cardDetails" class="payment-option" style="display: none;">
                 <div class="form-grid">
                     <div class="form-group">
-                        <label><i class="fas fa-user"></i> Name:</label>
-                        <input type="text" id="name" required placeholder="Enter your full name">
+                        <label><i class="fas fa-credit-card"></i> Card Number:</label>
+                        <input type="text" id="card_number" placeholder="1234 5678 9012 3456" maxlength="19">
                     </div>
                     <div class="form-group">
-                        <label><i class="fas fa-phone"></i> Mobile Number:</label>
-                        <input type="text" id="mobile_number" required placeholder="Enter mobile number">
+                        <label><i class="fas fa-user"></i> Cardholder Name:</label>
+                        <input type="text" id="card_holder" placeholder="Name as on card">
                     </div>
                     <div class="form-group">
-                        <label><i class="fas fa-id-card"></i> Aadhar:</label>
-                        <input type="text" id="aadhar" placeholder="Enter Aadhar number">
+                        <label><i class="fas fa-calendar"></i> Expiry Date:</label>
+                        <input type="text" id="expiry_date" placeholder="MM/YY" maxlength="5">
                     </div>
                     <div class="form-group">
-                        <label><i class="fas fa-birthday-cake"></i> Age:</label>
-                        <input type="number" id="age" placeholder="Enter age" min="1" max="120">
-                    </div>
-                    <div class="form-group">
-                        <label><i class="fas fa-venus-mars"></i> Gender:</label>
-                        <select id="gender">
-                            <option value="">Select Gender</option>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label><i class="fas fa-train"></i> Train:</label>
-                        <select id="train_no" required>
-                            <option value="">Select Train</option>
-                        </select>
+                        <label><i class="fas fa-lock"></i> CVV:</label>
+                        <input type="password" id="cvv" placeholder="123" maxlength="4">
                     </div>
                 </div>
+                <div class="card-types">
+                    <i class="fab fa-cc-visa"></i>
+                    <i class="fab fa-cc-mastercard"></i>
+                    <i class="fab fa-cc-amex"></i>
+                    <i class="fas fa-credit-card"></i>
+                </div>
+            </div>
 
-                <div id="trainDetails" class="train-details">
-                    <h3>Train Details</h3>
-                    <div class="train-info-grid">
-                        <div class="info-item">
-                            <strong>Train Name:</strong> <span id="name1">--</span>
-                        </div>
-                        <div class="info-item">
-                            <strong>From:</strong> <span id="source">--</span>
-                        </div>
-                        <div class="info-item">
-                            <strong>To:</strong> <span id="destination">--</span>
-                        </div>
-                        <div class="info-item">
-                            <strong>Class:</strong> <span id="class">--</span>
-                        </div>
-                    </div>
+            <!-- Net Banking Details -->
+            <div id="netbankingDetails" class="payment-option" style="display: none;">
+                <div class="form-group">
+                    <label><i class="fas fa-university"></i> Select Your Bank:</label>
+                    <select id="bank_name">
+                        <option value="">Choose your bank</option>
+                        <option value="SBI">State Bank of India</option>
+                        <option value="HDFC">HDFC Bank</option>
+                        <option value="ICICI">ICICI Bank</option>
+                        <option value="Axis">Axis Bank</option>
+                        <option value="PNB">Punjab National Bank</option>
+                        <option value="BOI">Bank of India</option>
+                        <option value="Kotak">Kotak Mahindra Bank</option>
+                        <option value="Yes">Yes Bank</option>
+                        <option value="Other">Other Banks</option>
+                    </select>
                 </div>
-                
-                <button type="submit" class="btn-primary">
-                    <i class="fas fa-check-circle"></i> Book Ticket
-                </button>
-            </form>
-        </section>
+                <div class="bank-info">
+                    <p><i class="fas fa-shield-alt"></i> Secure 256-bit SSL encryption</p>
+                    <p><i class="fas fa-clock"></i> Instant payment confirmation</p>
+                </div>
+            </div>
+
+            <!-- Digital Wallet Details -->
+            <div id="walletDetails" class="payment-option" style="display: none;">
+                <h4>Select Digital Wallet:</h4>
+                <div class="wallet-options">
+                    <button type="button" class="wallet-btn" data-wallet="paytm">
+                        <i class="fas fa-wallet"></i> 
+                        <span>Paytm Wallet</span>
+                    </button>
+                    <button type="button" class="wallet-btn" data-wallet="mobikwik">
+                        <i class="fas fa-mobile-alt"></i> 
+                        <span>MobiKwik</span>
+                    </button>
+                    <button type="button" class="wallet-btn" data-wallet="freecharge">
+                        <i class="fas fa-bolt"></i> 
+                        <span>FreeCharge</span>
+                    </button>
+                    <button type="button" class="wallet-btn" data-wallet="amazonpay">
+                        <i class="fab fa-amazon"></i> 
+                        <span>Amazon Pay</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <button type="submit" class="btn-primary">
+            <i class="fas fa-check-circle"></i> Book Ticket & Pay
+        </button>
+    </form>
+</section>
+
 
         <!-- Past Tickets Section -->
         <section id="pastTicketsSection" class="hidden card">
